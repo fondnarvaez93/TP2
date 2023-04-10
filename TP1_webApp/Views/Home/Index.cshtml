@@ -1,0 +1,63 @@
+﻿@model TP1_webApp.Models.SQLConnection
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+
+<head>
+    <meta charset="utf-8">
+</head>
+<body>
+    <div class="content">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <img src="images/login.jpg" alt="Image" class="img-fluid">
+                </div>
+                <div class="col-md-6 contents">
+                    <div class="row justify-content-center">
+                        <div class="col-md-8">
+                            <div class="mb-4">
+                                <h3>Sign In</h3>
+                                <p class="mb-4">Add your credentials to log in.</p>
+                            </div>
+                            @using (Html.BeginForm("LogIn", "Home"))
+                            {
+                                <div class="form-group">
+                                    @Html.LabelFor(m => m.UserName, "UserName:")
+                                </div>
+                                <div class="editor-field">
+                                    @Html.TextBoxFor(m => m.UserName)
+                                </div>
+
+                                <div class="form-group">
+                                    @Html.LabelFor(m => m.Password, "Password:")
+                                </div>
+                                <div class="editor-field">
+                                    @Html.TextBoxFor(m => m.Password)
+                                </div>
+
+                                <div class="text pl-3">
+                                    <p style="color:red">
+                                        @ViewBag.Result
+                                    </p>
+
+                                </div>
+
+                                <div class="form-group">
+                                    <input type="submit" value="Log In" class="btn btn-success" />
+                                </div>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="js/jquery-3.3.1.min.js"></script>
+    <script src="js/popper.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,98 @@
+﻿@model TP1_webApp.Models.SQLConnection
+
+
+@{
+}
+
+
+
+<body>
+    <section class="ftco-section">
+        <div class="container">
+
+
+            <div class="row justify-content-center">
+                <div class="col-md-6 text-center mb-5">
+                    <h2 class="heading-section">Insert new Item</h2>
+                </div>
+            </div>
+
+
+            <div class="row justify-content-center">
+                <div class="col-lg-10 col-md-12">
+                    <div class="wrapper">
+                        <div class="row no-gutters">
+
+
+                            <div class="col-md-7 d-flex align-items-stretch">
+                                <div class="contact-wrap w-100 p-md-5 p-4">
+                                    <div class="row justify-content-center">
+                                        <div class="contact-wrap w-100 p-md-5 p-4">
+                                            <h3 class="mb-4">Add the requeried information</h3>
+                                            <div id="form-message-warning" class="mb-4"></div>
+                                            <div id="form-message-success" class="mb-4">
+                                                @using (Html.BeginForm("Insert", "Home"))
+                                                {
+                                                    <div class="form-group">
+                                                        @Html.LabelFor(m => m.Name, "Name:")
+                                                    </div>
+                                                    <div class="editor-field">
+                                                        @Html.TextBoxFor(m => m.Name)
+                                                    </div>
+
+                                                    <div class="form-group">
+                                                        @Html.LabelFor(m => m.Price, "Price:")
+                                                    </div>
+                                                    <div class="editor-field">
+                                                        @Html.TextBoxFor(m => m.Price)
+                                                    </div>
+
+                                                    <div class="form-group">
+                                                        <input type="submit" value="Enviar!" class="btn btn-success" />
+                                                        @Html.ActionLink("Return", "Return", new { area = "" }, new { @class = "btn btn-primary" })
+                                                    </div>
+                                                }
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+
+                            <div class="col-md-5 d-flex align-items-stretch">
+                                <div class="info-wrap bg-primary w-100 p-lg-5 p-4">
+
+                                    <h3 class="mb-4 mt-md-4" style="color:darkblue" >Saved Information</h3>
+                                    <div class="dbox w-100 d-flex align-items-start">
+                                        <div class="icon d-flex align-items-center justify-content-center">
+                                            <span class="fa fa-map-marker"></span>
+                                        </div>
+                                        <div class="text pl-3">
+                                            <h4 style="color:lightblue">
+                                                <b>Name:</b>    @ViewBag.Name <br />
+                                                <b>Price:</b>  @ViewBag.Price
+                                            </h4>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <script src="js/jquery.min.js"></script>
+    <script src="js/popper.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/jquery.validate.min.js"></script>
+    <script src="js/main.js"></script>
+    <script defer="" src="https://static.cloudflareinsights.com/beacon.min.js/vaafb692b2aea4879b33c060e79fe94621666317369993" integrity="sha512-0ahDYl866UMhKuYcW078ScMalXqtFJggm7TmlUtp0UlD4eQk0Ixfnm5ykXKvGJNFjLMoortdseTfsRT8oCfgGA==" data-cf-beacon="{&quot;rayId&quot;:&quot;7a4884224a302b01&quot;,&quot;token&quot;:&quot;cd0b4b3a733644fc843ef0b185f98241&quot;,&quot;version&quot;:&quot;2023.2.0&quot;,&quot;si&quot;:100}" crossorigin="anonymous"></script>
+
+
+</body>

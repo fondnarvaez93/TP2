@@ -9,49 +9,57 @@
     <meta charset="utf-8">
 </head>
 <body>
-    <div class="content">
+    <div class="content justify-content-center">
         <div class="container">
-            <div class="row">
-                <div class="col-md-6">
-                    <img src="images/login.jpg" alt="Image" class="img-fluid">
-                </div>
-                <div class="col-md-6 contents">
-                    <div class="row justify-content-center">
-                        <div class="col-md-8">
-                            <div class="mb-4">
-                                <h3>Sign In</h3>
-                                <p class="mb-4">Add your credentials to log in.</p>
+
+            <div class="row justify-content-center">
+                <div class="col-lg-10 col-md-12">
+                    <div class="wrapper">
+                        <div class="row no-gutters">
+                            <div class="col-md-5 d-flex align-items-stretch">
+                                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQkovC9a5Je29Pg-DaKoC5fPi8s2JAdD5wNqx1esDO7uEv4r9LFFAl1Xu-IZKZYBRMqBz4&usqp=CAU">
                             </div>
-                            @using (Html.BeginForm("LogIn", "Home"))
-                            {
-                                <div class="form-group">
-                                    @Html.LabelFor(m => m.UserName, "UserName:")
-                                </div>
-                                <div class="editor-field">
-                                    @Html.TextBoxFor(m => m.UserName)
-                                </div>
 
-                                <div class="form-group">
-                                    @Html.LabelFor(m => m.Password, "Password:")
-                                </div>
-                                <div class="editor-field">
-                                    @Html.TextBoxFor(m => m.Password)
-                                </div>
+                            <div class="col-md-7 d-flex align-items-stretch">
+                                <div class="form-signin w-100 m-auto">
+                                    <div class="form-floating">
 
-                                <div class="text pl-3">
-                                    <p style="color:red">
-                                        @ViewBag.Result
-                                    </p>
+                                        <h3>Sign In</h3>
+                                        <p class="mb-4">Add your credentials to log in.</p>
+
+                                        @using (Html.BeginForm("LogIn", "Home"))
+                                        {
+                                            <div class="p-lg-2 p-1 btn-lg" style="font-size:120%">
+                                                @Html.LabelFor(m => m.UserName, "User Name: ")
+                                                @Html.TextBoxFor(m => m.UserName)
+                                            </div>
+
+                                            <div class="p-lg-2 p-1 btn-lg" style="font-size:120%">
+                                                @Html.LabelFor(m => m.Password, "Password: ")
+                                                @Html.TextBoxFor(m => m.Password)
+                                            </div>
+
+                                            <div class="input-group text-center p-lg-1 p-1  btn btn-lg">
+                                                <p style="color:red">
+                                                    @ViewBag.Result
+                                                </p>
+
+                                            </div>
+
+                                            <div class="input-group text-center">
+                                                <input type="submit" value="Log In" class="w-100 btn btn-lg btn-primary" />
+                                            </div>
+                                        }
+                                    </div>
 
                                 </div>
-
-                                <div class="form-group">
-                                    <input type="submit" value="Log In" class="btn btn-success" />
-                                </div>
-                            }
+                            </div>
                         </div>
                     </div>
                 </div>
+
+
+
             </div>
         </div>
     </div>

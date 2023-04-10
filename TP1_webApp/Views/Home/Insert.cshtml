@@ -34,6 +34,13 @@
                                                 @using (Html.BeginForm("Insert", "Home"))
                                                 {
                                                     <div class="form-group">
+                                                        @Html.LabelFor(m => m.Class, "Clase:")
+                                                    </div>
+                                                    <div class="editor-field">
+                                                        @Html.TextBoxFor(m => m.Class)
+                                                    </div>
+
+                                                    <div class="form-group">
                                                         @Html.LabelFor(m => m.Name, "Name:")
                                                     </div>
                                                     <div class="editor-field">
@@ -70,6 +77,7 @@
                                         </div>
                                         <div class="text pl-3">
                                             <h4 style="color:lightblue">
+                                                <b>Class:</b>    @ViewBag.Class <br />
                                                 <b>Name:</b>    @ViewBag.Name <br />
                                                 <b>Price:</b>  @ViewBag.Price
                                             </h4>

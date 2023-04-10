@@ -31,9 +31,10 @@
                                     <div id="form-message-success" class="mb-4">
                                         Total items found:
                                         <form>
+
                                             <div class="input-group text-center">
                                                 <input id="result_txt" type="text" class="form-control text-center" value=@ViewBag.Count>
-                                                @Html.ActionLink("Refresh", "Get_Items", new { area = "" }, new { @class = "btn btn-success" })
+                                                @Html.ActionLink("Get Items", "Get_Items", new { area = "" }, new { @class = "btn btn-success" })
                                             </div>
 
                                         </form>
@@ -43,6 +44,7 @@
                                         <thead>
                                             <tr>
                                                 <th>ID</th>
+                                                <th>IDClase</th>
                                                 <th>Nombre</th>
                                                 <th>Precio</th>
                                             </tr>
@@ -52,6 +54,7 @@
                                             {
                                                 <tr>
                                                     <td>@Html.DisplayFor(model => model.ItemsList[i].ID)</td>
+                                                    <td>@Html.DisplayFor(model => model.ItemsList[i].IDClase)</td>
                                                     <td>@Html.DisplayFor(model => model.ItemsList[i].Name)</td>
                                                     <td>@Html.DisplayFor(model => model.ItemsList[i].Price)</td>
                                                 </tr>
@@ -74,8 +77,29 @@
                                         </div>
                                         <div class="text pl-3">
                                             <form>
+                                                <div class="input-group text-center">
+                                                    <input id="NameFilter_txt" type="text" class="form-control text-center">
+                                                    @Html.ActionLink("Filter by Name", "Get_Items", new { area = "" }, new { @class = "btn btn-success" })
+                                                    <p></p>
+                                                </div>
 
-                                                @Html.ActionLink("Add", "Insert", new { area = "" }, new { @class = "btn btn-success" })
+                                                <div class="input-group text-center">
+                                                    <input id="CountFilter_txt" type="text" class="form-control text-center">
+                                                    @Html.ActionLink("Filter by Count", "Get_Items", new { area = "" }, new { @class = "btn btn-success" })
+                                                </div>
+
+                                                <div class="input-group text-center">
+                                                    <input id="ClassFilter_txt" type="text" class="form-control text-center">
+                                                    @Html.ActionLink("Filter by Class", "Get_Items", new { area = "" }, new { @class = "btn btn-success" })
+                                                </div>
+
+                                                <div class="input-group text-center">
+                                                @Html.ActionLink("Add new item", "Insert", new { area = "" }, new { @class = "btn btn-success" })
+                                                </div>
+
+                                                <div class="input-group text-center">
+                                                    @Html.ActionLink("Sign Out", "Sign_Out", new { area = "" }, new { @class = "btn btn-primary" })
+                                                </div>
                                                 
                                             </form>
 

@@ -15,6 +15,7 @@ namespace TP1_webApp.Models
         // ... DB credentials
         public String DBCredentials;
         public SqlConnection Connection;
+        public int Class { get; set; }
         public String Name { get; set; }
         public int Price { get; set; }
         public String UserName { get; set; }
@@ -31,6 +32,7 @@ namespace TP1_webApp.Models
             //public String DBCredentials = "Data Source=ec2-54-160-71-139.compute-1.amazonaws.com;Initial Catalog=TareaConcepto;Persist Security Info=True;User ID=sa;Password=Guachin321?";
             DBCredentials = "Data Source=ec2-18-217-119-78.us-east-2.compute.amazonaws.com;Initial Catalog=TP1;Persist Security Info=True;User ID=sa;Password=Admin1234";
             Connection = new SqlConnection(DBCredentials);
+            Class = 0;
             Name = "";
             Price = 0;
             ItemsListCount = 0;
@@ -62,11 +64,12 @@ namespace TP1_webApp.Models
                 // ... collect the items from the DB
                 while (Reader.Read())
                 {
-                    String articuloID = "" + Reader["Id"].ToString();
+                    String articuloID = "" + Reader["id"].ToString();
+                    String articuloIDClase = "" + Reader["IdClaseArticulo"].ToString();
                     String articuloName = "" + Reader["Nombre"].ToString();
                     String articuloPrice = "" + Reader["Precio"].ToString();
 
-                    ItemClass articuloInfo = new ItemClass(articuloID, articuloName, articuloPrice);
+                    ItemClass articuloInfo = new ItemClass(articuloID, articuloIDClase, articuloName, articuloPrice);
                     ItemsList.Add(articuloInfo);
                     ItemsListCount++;
                 }
@@ -86,7 +89,7 @@ namespace TP1_webApp.Models
 
 
         // ... Add item to DB
-        public void Add(String valName, int valPrice)
+        public void Add(int valClass, String valName, int valPrice)
         {
             try
             {
@@ -96,6 +99,7 @@ namespace TP1_webApp.Models
                 // ... using the stored procedure
                 SqlCommand InsertCommand = new SqlCommand("AddNewItem", Connection);
                 InsertCommand.CommandType = CommandType.StoredProcedure;
+                InsertCommand.Parameters.AddWithValue("@ArticuloClass", valClass);
                 InsertCommand.Parameters.AddWithValue("@newName", valName);
                 InsertCommand.Parameters.AddWithValue("@newPrice", valPrice);
 
@@ -132,7 +136,6 @@ namespace TP1_webApp.Models
                 InsertCommand.CommandType = CommandType.StoredProcedure;
                 InsertCommand.Parameters.AddWithValue("@UserName", UserN);
                 InsertCommand.Parameters.AddWithValue("@Password", Pass);
-                //SqlDataReader Reader = InsertCommand.ExecuteReader();
 
                 
                 // @ReturnVal could be any name

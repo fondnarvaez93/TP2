@@ -35,6 +35,14 @@ namespace TP1_webApp.Controllers
             return View("Privacy", myConnection);
         }
 
+        // Return Home view
+        public IActionResult Sign_Out()
+        {
+            // ... calling the model method
+            myConnection.LogIn_Result = false;
+            return View("Index", myConnection);
+        }
+
         // Insert view
         public IActionResult Insert()
         {
@@ -71,14 +79,19 @@ namespace TP1_webApp.Controllers
         [HttpPost]
         public ActionResult Insert(Models.SQLConnection SQLconn)
         {
+            ViewBag.Class = SQLconn.Class;
             ViewBag.Name = SQLconn.Name;
             ViewBag.Price = SQLconn.Price;
             if (SQLconn.Name == null)
             {
+                ViewBag.Class = "ERR";
                 ViewBag.Name = "ERR";
                 ViewBag.Price = "ERR";
             }
-            SQLconn.Add(SQLconn.Name, SQLconn.Price);
+            else
+            {
+                SQLconn.Add(SQLconn.Class, SQLconn.Name, SQLconn.Price);
+            }
             return View("Insert");
         }
 

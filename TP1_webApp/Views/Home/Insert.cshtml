@@ -54,6 +54,12 @@
                                                         @Html.TextBoxFor(m => m.Price)
                                                     </div>
 
+                                                    <div class="input-group text-center p-lg-1 p-1  btn btn-lg">
+                                                        <p style="color:red">
+                                                            @ViewBag.Add_msg
+                                                        </p>
+                                                    </div>
+
                                                     <div class="form-group">
                                                         <input type="submit" value="Enviar!" class="btn btn-success" />
                                                         @Html.ActionLink("Return", "Return", new { area = "" }, new { @class = "btn btn-primary" })

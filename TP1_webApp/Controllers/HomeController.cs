@@ -79,9 +79,6 @@ namespace TP1_webApp.Controllers
         [HttpPost]
         public ActionResult Insert(Models.SQLConnection SQLconn)
         {
-            ViewBag.Class = SQLconn.Class;
-            ViewBag.Name = SQLconn.Name;
-            ViewBag.Price = SQLconn.Price;
             if (SQLconn.Name == null)
             {
                 ViewBag.Class = "ERR";
@@ -91,6 +88,14 @@ namespace TP1_webApp.Controllers
             else
             {
                 SQLconn.Add(SQLconn.Class, SQLconn.Name, SQLconn.Price);
+
+                if (SQLconn.Add_msg == "")
+                {
+                    ViewBag.Class = SQLconn.Class;
+                    ViewBag.Name = SQLconn.Name;
+                    ViewBag.Price = SQLconn.Price;
+                }
+                ViewBag.Add_msg = SQLconn.Add_msg;
             }
             return View("Insert");
         }
@@ -134,7 +139,7 @@ namespace TP1_webApp.Controllers
         public ActionResult FilterByCount(SQLConnection SQLconn)
         {
             ViewBag.filter = SQLconn.CountFilter_txt;
-            if (SQLconn.CountFilter_txt == 0)
+            if (SQLconn.CountFilter_txt != (int)SQLconn.CountFilter_txt)
             {
                 SQLconn.Get();
                 ViewBag.Count = SQLconn.ItemsListCount;
@@ -151,7 +156,7 @@ namespace TP1_webApp.Controllers
         public ActionResult FilterByClass(SQLConnection SQLconn)
         {
             ViewBag.filter = SQLconn.ClassFilter_txt;
-            if (SQLconn.ClassFilter_txt == 0)
+            if (SQLconn.ClassFilter_txt == null)
             {
                 SQLconn.Get();
                 ViewBag.Count = SQLconn.ItemsListCount;

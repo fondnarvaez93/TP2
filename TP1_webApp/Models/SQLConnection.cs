@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Data;
 using System.Data.SqlClient;
 
@@ -21,10 +22,12 @@ namespace TP1_webApp.Models
         public String UserName { get; set; }
         public String Password { get; set; }
         public String LogIn_msg { get; set; }
+        public String Add_msg { get; set; }
         public bool LogIn_Result { get; set; }
         public String NameFilter_txt { get; set; }
         public int CountFilter_txt { get; set; }
-        public int ClassFilter_txt { get; set; }
+        public String ClassFilter_txt { get; set; }
+        public List<SelectListItem> ListClass { get; set; }
 
 
 
@@ -45,10 +48,12 @@ namespace TP1_webApp.Models
             UserName = "";
             Password = "";
             LogIn_msg = "";
+            Add_msg = "";
             LogIn_Result = false;
             NameFilter_txt = "";
             CountFilter_txt = 0;
-            ClassFilter_txt = 0;
+            ClassFilter_txt = "";
+            ListClass = new List<SelectListItem>() { new SelectListItem { Text = "Ferreteria", Value = "Ferreteria" } };
         }
 
 
@@ -109,11 +114,21 @@ namespace TP1_webApp.Models
                 InsertCommand.Parameters.AddWithValue("@newName", valName);
                 InsertCommand.Parameters.AddWithValue("@newPrice", valPrice);
 
+                // @ReturnVal could be any name
+                var returnParameter = InsertCommand.Parameters.Add("@ReturnVal", SqlDbType.VarChar);
+                returnParameter.Direction = ParameterDirection.ReturnValue;
+
                 // ... open connection and send new item
                 try
                 {
                     Connection.Open();
                     InsertCommand.ExecuteNonQuery();
+                    // ... collect the items from the DB
+                    var result = returnParameter.Value.ToString();
+                    if (result == "1")
+                    {
+                        Add_msg += "Articulo con nombre duplicado";
+                    }
                     Connection.Close();
                 }
                 catch (Exception ex)
@@ -260,7 +275,7 @@ namespace TP1_webApp.Models
         }
 
         // ... Filter Count info from DB
-        public void FilterClass(int classID)
+        public void FilterClass(String classID)
         {
             try
             {
@@ -270,7 +285,7 @@ namespace TP1_webApp.Models
                 // ... using the stored procedure
                 SqlCommand SelectCommand = new SqlCommand("FilterByClass", Connection);
                 SelectCommand.CommandType = CommandType.StoredProcedure;
-                SelectCommand.Parameters.AddWithValue("@ClassID", classID);
+                SelectCommand.Parameters.AddWithValue("@ClassName", classID);
                 SqlDataReader Reader = SelectCommand.ExecuteReader();
 
                 // ... collect the items from the DB

@@ -19,30 +19,43 @@
                 <div class="info-wrap w-100 p-lg-5 p-4" style="background-color:SlateBlue">
                     
                     <form>
-                        <div class="input-group text-center info-wrap w-100 p-lg-1 p-1">
-                            <input id="NameFilter_txt" type="text" class="form-control text-center">
-                            @Html.ActionLink("Filter by Name", "FilterByName", new { area = "" }, new { @class = "btn btn-success" })
-                            <p></p>
-                        </div>
 
-                        @using (Html.BeginForm("mio", "Home", FormMethod.Post))
+                        @using (Html.BeginForm("FilterByName", "Home", FormMethod.Post))
                         {
-                        <div class="input-group text-center info-wrap w-100 p-lg-1 p-1">
-                            @Html.TextBoxFor(m => m.NameFilter_txt)
-                            <input type="submit" value="Enviar!" class="btn btn-success" />
-                        </div>
+                            @Html.LabelFor(m => m.NameFilter_txt, "")
+                            @Html.LabelFor(m => m.CountFilter_txt, "")
+                            @Html.LabelFor(m => m.ClassFilter_txt, "")
+                        }
+
+                        @using (Html.BeginForm("FilterByName", "Home", FormMethod.Post))
+                        {
+                            <div class="input-group text-center info-wrap">
+                                @Html.EditorFor(m => m.NameFilter_txt, new { htmlAttributes = new { @class = "form-control text-center", @style = "width:700px" } })
+                                <input type="submit" value="Filter by Name" class="btn btn-success" />
+                            </div>
+                        }
+
+                        @using (Html.BeginForm("FilterByCount", "Home", FormMethod.Post))
+                        {
+                            <div class="input-group text-center info-wrap">
+                                @Html.EditorFor(m => m.CountFilter_txt, new { htmlAttributes = new { @class = "form-control text-center", @style = "width:700px" } })
+                                <input type="submit" value="Filter by Count" class="btn btn-success" />
+                            </div>
+                        }
+
+                        @using (Html.BeginForm("FilterByClass", "Home", FormMethod.Post))
+                        {
+                            <div class="input-group text-center info-wrap">
+                                @Html.EditorFor(m => m.ClassFilter_txt, new { htmlAttributes = new { @class = "form-control text-center", @style = "width:700px" } })
+                                <input type="submit" value="Filter by Classs" class="btn btn-success" />
+                            </div>
                         }
 
                         <div class="input-group text-center info-wrap w-100 p-lg-1 p-1">
-                            <input id="ClassFilter_txt" type="text" class="form-control text-center">
-                            @Html.ActionLink("Filter by  Classs", "Get_Items", new { area = "" }, new { @class = "btn btn-success" })
+                            @Html.ActionLink("Add new item", "Insert", new { area = "" }, new { @class = "form-control btn btn-lg btn-success" })
                         </div>
 
-                        <div class="input-group text-center info-wrap w-100 p-lg-2 p-1">
-                            @Html.ActionLink("Add new item", "Insert", new { area = "" }, new { @class = "btn btn-lg btn-success" })
-                        </div>
-
-                        <div class="input-group text-center info-wrap w-100 p-lg-2 p-1">
+                        <div class="input-group text-center info-wrap w-100 p-lg-1 p-1">
                             @Html.ActionLink("Sign Out", "Sign_Out", new { area = "" }, new { @class = "btn btn-lg btn-primary" })
                         </div>
 

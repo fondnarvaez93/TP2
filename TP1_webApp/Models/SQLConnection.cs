@@ -23,15 +23,17 @@ namespace TP1_webApp.Models
         public String LogIn_msg { get; set; }
         public bool LogIn_Result { get; set; }
         public String NameFilter_txt { get; set; }
+        public int CountFilter_txt { get; set; }
+        public int ClassFilter_txt { get; set; }
 
-        
+
 
         // Init
         // ... this inicialize the table
         public SQLConnection()
         {
             //public String DBCredentials = "Data Source=ec2-54-160-71-139.compute-1.amazonaws.com;Initial Catalog=TareaConcepto;Persist Security Info=True;User ID=sa;Password=Guachin321?";
-            DBCredentials = "Data Source=ec2-18-217-119-78.us-east-2.compute.amazonaws.com;Initial Catalog=TP1;Persist Security Info=True;User ID=sa;Password=Admin1234";
+            DBCredentials = "Data Source=ec2-3-16-154-37.us-east-2.compute.amazonaws.com;Initial Catalog=TP1;Persist Security Info=True;User ID=sa;Password=Admin1234";
             Connection = new SqlConnection(DBCredentials);
             Class = 0;
             Name = "";
@@ -45,6 +47,8 @@ namespace TP1_webApp.Models
             LogIn_msg = "";
             LogIn_Result = false;
             NameFilter_txt = "";
+            CountFilter_txt = 0;
+            ClassFilter_txt = 0;
         }
 
 
@@ -180,7 +184,7 @@ namespace TP1_webApp.Models
 
 
         // ... Filter Name info from DB
-        public void FilterName()
+        public void FilterName(String str)
         {
             try
             {
@@ -190,6 +194,7 @@ namespace TP1_webApp.Models
                 // ... using the stored procedure
                 SqlCommand SelectCommand = new SqlCommand("FilterByName", Connection);
                 SelectCommand.CommandType = CommandType.StoredProcedure;
+                SelectCommand.Parameters.AddWithValue("@Item", str);
                 SqlDataReader Reader = SelectCommand.ExecuteReader();
 
                 // ... collect the items from the DB
@@ -217,8 +222,8 @@ namespace TP1_webApp.Models
             }
         }
 
-        // ... Filter Name info from DB
-        public void Cosito(String str)
+        // ... Filter Count info from DB
+        public void FilterCount(int count)
         {
             try
             {
@@ -226,8 +231,9 @@ namespace TP1_webApp.Models
                 Connection.Open();
 
                 // ... using the stored procedure
-                SqlCommand SelectCommand = new SqlCommand("FilterByName", Connection);
+                SqlCommand SelectCommand = new SqlCommand("FilterByCount", Connection);
                 SelectCommand.CommandType = CommandType.StoredProcedure;
+                SelectCommand.Parameters.AddWithValue("@Count", count);
                 SqlDataReader Reader = SelectCommand.ExecuteReader();
 
                 // ... collect the items from the DB
@@ -244,8 +250,43 @@ namespace TP1_webApp.Models
                 }
 
                 // ... close connection
-                var sortedList = ItemsList.OrderBy(p => p.Name).ToList();
-                ItemsList = sortedList;
+                Reader.Close();
+
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Exception: " + ex.ToString());
+            }
+        }
+
+        // ... Filter Count info from DB
+        public void FilterClass(int classID)
+        {
+            try
+            {
+                // ... open connection, send request and read responce
+                Connection.Open();
+
+                // ... using the stored procedure
+                SqlCommand SelectCommand = new SqlCommand("FilterByClass", Connection);
+                SelectCommand.CommandType = CommandType.StoredProcedure;
+                SelectCommand.Parameters.AddWithValue("@ClassID", classID);
+                SqlDataReader Reader = SelectCommand.ExecuteReader();
+
+                // ... collect the items from the DB
+                while (Reader.Read())
+                {
+                    String articuloID = "" + Reader["id"].ToString();
+                    String articuloIDClase = "" + Reader["IdClaseArticulo"].ToString();
+                    String articuloName = "" + Reader["Nombre"].ToString();
+                    String articuloPrice = "" + Reader["Precio"].ToString();
+
+                    ItemClass articuloInfo = new ItemClass(articuloID, articuloIDClase, articuloName, articuloPrice);
+                    ItemsList.Add(articuloInfo);
+                    ItemsListCount++;
+                }
+
+                // ... close connection
                 Reader.Close();
 
             }

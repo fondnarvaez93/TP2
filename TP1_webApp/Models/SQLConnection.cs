@@ -71,7 +71,7 @@ namespace TP1_webApp.Models
                 while (Reader.Read())
                 {
                     String articuloID = "" + Reader["id"].ToString();
-                    String articuloIDClase = "" + Reader["IdClaseArticulo"].ToString();
+                    String articuloIDClase = "" + Reader["NombreClase"].ToString();
                     String articuloName = "" + Reader["Nombre"].ToString();
                     String articuloPrice = "" + Reader["Precio"].ToString();
 

@@ -16,7 +16,7 @@ namespace TP1_webApp.Models
         // ... DB credentials
         public String DBCredentials;
         public SqlConnection Connection;
-        public int Class { get; set; }
+        public String Class { get; set; }
         public String Name { get; set; }
         public int Price { get; set; }
         public String UserName { get; set; }
@@ -38,7 +38,7 @@ namespace TP1_webApp.Models
             //public String DBCredentials = "Data Source=ec2-54-160-71-139.compute-1.amazonaws.com;Initial Catalog=TareaConcepto;Persist Security Info=True;User ID=sa;Password=Guachin321?";
             DBCredentials = "Data Source=ec2-3-16-154-37.us-east-2.compute.amazonaws.com;Initial Catalog=TP1;Persist Security Info=True;User ID=sa;Password=Admin1234";
             Connection = new SqlConnection(DBCredentials);
-            Class = 0;
+            Class = "";
             Name = "";
             Price = 0;
             ItemsListCount = 0;
@@ -100,7 +100,7 @@ namespace TP1_webApp.Models
 
 
         // ... Add item to DB
-        public void Add(int valClass, String valName, int valPrice)
+        public void Add(String valClass, String valName, int valPrice)
         {
             try
             {

@@ -112,6 +112,26 @@ namespace TP1_webApp.Controllers
             
         }
 
+        // GFilter by Name method
+        public ActionResult FilterByName()
+        {
+            // ... calling the Get method
+            myConnection.FilterName();
+            ViewBag.Count = myConnection.ItemsListCount;
+            return View("Privacy", myConnection);
+        }
+
+        // GFilter by Name method
+        [HttpPost]
+        public ActionResult mio(SQLConnection SQLconn)
+        {
+            // ... calling the Get method
+            myConnection.Cosito(SQLconn.NameFilter_txt);
+            ViewBag.Count = SQLconn.NameFilter_txt;
+            return View("Privacy", myConnection);
+        }
+
+
 
     }
 }

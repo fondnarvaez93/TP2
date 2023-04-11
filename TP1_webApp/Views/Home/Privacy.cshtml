@@ -21,14 +21,17 @@
                     <form>
                         <div class="input-group text-center info-wrap w-100 p-lg-1 p-1">
                             <input id="NameFilter_txt" type="text" class="form-control text-center">
-                            @Html.ActionLink("Filter by Name", "Get_Items", new { area = "" }, new { @class = "btn btn-success" })
+                            @Html.ActionLink("Filter by Name", "FilterByName", new { area = "" }, new { @class = "btn btn-success" })
                             <p></p>
                         </div>
 
+                        @using (Html.BeginForm("mio", "Home", FormMethod.Post))
+                        {
                         <div class="input-group text-center info-wrap w-100 p-lg-1 p-1">
-                            <input id="CountFilter_txt" type="text" class="form-control text-center">
-                            @Html.ActionLink("Filter by Count", "Get_Items", new { area = "" }, new { @class = "btn btn-success" })
+                            @Html.TextBoxFor(m => m.NameFilter_txt)
+                            <input type="submit" value="Enviar!" class="btn btn-success" />
                         </div>
+                        }
 
                         <div class="input-group text-center info-wrap w-100 p-lg-1 p-1">
                             <input id="ClassFilter_txt" type="text" class="form-control text-center">

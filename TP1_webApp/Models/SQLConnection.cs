@@ -22,8 +22,9 @@ namespace TP1_webApp.Models
         public String Password { get; set; }
         public String LogIn_msg { get; set; }
         public bool LogIn_Result { get; set; }
+        public String NameFilter_txt { get; set; }
 
-
+        
 
         // Init
         // ... this inicialize the table
@@ -43,6 +44,7 @@ namespace TP1_webApp.Models
             Password = "";
             LogIn_msg = "";
             LogIn_Result = false;
+            NameFilter_txt = "";
         }
 
 
@@ -175,5 +177,84 @@ namespace TP1_webApp.Models
                 Console.WriteLine("Exception: " + ex.ToString());
             }
         }
+
+
+        // ... Filter Name info from DB
+        public void FilterName()
+        {
+            try
+            {
+                // ... open connection, send request and read responce
+                Connection.Open();
+
+                // ... using the stored procedure
+                SqlCommand SelectCommand = new SqlCommand("FilterByName", Connection);
+                SelectCommand.CommandType = CommandType.StoredProcedure;
+                SqlDataReader Reader = SelectCommand.ExecuteReader();
+
+                // ... collect the items from the DB
+                while (Reader.Read())
+                {
+                    String articuloID = "" + Reader["id"].ToString();
+                    String articuloIDClase = "" + Reader["IdClaseArticulo"].ToString();
+                    String articuloName = "" + Reader["Nombre"].ToString();
+                    String articuloPrice = "" + Reader["Precio"].ToString();
+
+                    ItemClass articuloInfo = new ItemClass(articuloID, articuloIDClase, articuloName, articuloPrice);
+                    ItemsList.Add(articuloInfo);
+                    ItemsListCount++;
+                }
+
+                // ... close connection
+                var sortedList = ItemsList.OrderBy(p => p.Name).ToList();
+                ItemsList = sortedList;
+                Reader.Close();
+
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Exception: " + ex.ToString());
+            }
+        }
+
+        // ... Filter Name info from DB
+        public void Cosito(String str)
+        {
+            try
+            {
+                // ... open connection, send request and read responce
+                Connection.Open();
+
+                // ... using the stored procedure
+                SqlCommand SelectCommand = new SqlCommand("FilterByName", Connection);
+                SelectCommand.CommandType = CommandType.StoredProcedure;
+                SqlDataReader Reader = SelectCommand.ExecuteReader();
+
+                // ... collect the items from the DB
+                while (Reader.Read())
+                {
+                    String articuloID = "" + Reader["id"].ToString();
+                    String articuloIDClase = "" + Reader["IdClaseArticulo"].ToString();
+                    String articuloName = "" + Reader["Nombre"].ToString();
+                    String articuloPrice = "" + Reader["Precio"].ToString();
+
+                    ItemClass articuloInfo = new ItemClass(articuloID, articuloIDClase, articuloName, articuloPrice);
+                    ItemsList.Add(articuloInfo);
+                    ItemsListCount++;
+                }
+
+                // ... close connection
+                var sortedList = ItemsList.OrderBy(p => p.Name).ToList();
+                ItemsList = sortedList;
+                Reader.Close();
+
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Exception: " + ex.ToString());
+            }
+        }
+
+
     }
 }

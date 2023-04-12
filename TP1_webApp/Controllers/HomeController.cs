@@ -154,7 +154,7 @@ namespace TP1_webApp.Controllers
                 return View("Privacy", SQLconn);
             }
             // ... calling the Get method
-            SQLconn.FilterCount(ViewBag.filter);
+            SQLconn.FilterCount(ViewBag.filter, User, myIP);
             ViewBag.Count = SQLconn.ItemsListCount;
             return View("Privacy", SQLconn);
         }

@@ -246,7 +246,7 @@ namespace TP1_webApp.Models
         }
 
         // ... Filter Count info from DB
-        public void FilterCount(int count)
+        public void FilterCount(int count, String user, String ip)
         {
             try
             {
@@ -254,10 +254,12 @@ namespace TP1_webApp.Models
                 Connection.Open();
 
                 // ... using the stored procedure
-                SqlCommand SelectCommand = new SqlCommand("FilterByCount", Connection);
-                SelectCommand.CommandType = CommandType.StoredProcedure;
-                SelectCommand.Parameters.AddWithValue("@Count", count);
-                SqlDataReader Reader = SelectCommand.ExecuteReader();
+                SqlCommand InsertCommand = new SqlCommand("FilterByCount", Connection);
+                InsertCommand.CommandType = CommandType.StoredProcedure;
+                InsertCommand.Parameters.AddWithValue("@Count", count);
+                InsertCommand.Parameters.AddWithValue("@User", user);
+                InsertCommand.Parameters.AddWithValue("@IP", ip);
+                SqlDataReader Reader = InsertCommand.ExecuteReader();
 
                 // ... collect the items from the DB
                 while (Reader.Read())

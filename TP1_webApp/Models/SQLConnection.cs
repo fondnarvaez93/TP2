@@ -145,7 +145,7 @@ namespace TP1_webApp.Models
 
 
         // ... Add item to DB
-        public void LogIn(String UserN, String Pass)
+        public void LogIn(String UserN, String Pass, String user, String ip)
         {
             try
             {
@@ -157,8 +157,10 @@ namespace TP1_webApp.Models
                 InsertCommand.CommandType = CommandType.StoredProcedure;
                 InsertCommand.Parameters.AddWithValue("@UserName", UserN);
                 InsertCommand.Parameters.AddWithValue("@Password", Pass);
+                InsertCommand.Parameters.AddWithValue("@User", user);
+                InsertCommand.Parameters.AddWithValue("@IP", ip);
 
-                
+
                 // @ReturnVal could be any name
                 var returnParameter = InsertCommand.Parameters.Add("@ReturnVal", SqlDbType.VarChar);
                 returnParameter.Direction = ParameterDirection.ReturnValue;

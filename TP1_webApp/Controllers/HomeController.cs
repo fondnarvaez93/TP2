@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.Data.SqlTypes;
 using System.Diagnostics;
+using System.Net;
 using System.Reflection;
 using TP1_webApp.Models;
 
@@ -11,6 +12,8 @@ namespace TP1_webApp.Controllers
         // HomeController
         private readonly ILogger<HomeController> _logger;
         SQLConnection myConnection = new SQLConnection();
+        String User = "";
+        String myIP = Dns.GetHostByName(Dns.GetHostName()).AddressList[0].ToString();
 
         // Logger
         public HomeController(ILogger<HomeController> logger)
@@ -22,6 +25,7 @@ namespace TP1_webApp.Controllers
         // Index view
         public IActionResult Index()
         {
+            ViewBag.UserName = myConnection.UserName;
             return View();
         }
 
@@ -31,6 +35,7 @@ namespace TP1_webApp.Controllers
         {
             // ... calling the model method
             myConnection.Get();
+            ViewBag.UserName = myConnection.UserName;
             ViewBag.Count = myConnection.ItemsListCount;
             return View("Privacy", myConnection);
         }
@@ -39,6 +44,7 @@ namespace TP1_webApp.Controllers
         public IActionResult Sign_Out()
         {
             // ... calling the model method
+            User = "";
             myConnection.LogIn_Result = false;
             return View("Index", myConnection);
         }
@@ -104,10 +110,11 @@ namespace TP1_webApp.Controllers
         [HttpPost]
         public ActionResult LogIn(Models.SQLConnection SQLconn)
         {
-            SQLconn.LogIn(SQLconn.UserName, SQLconn.Password);
+            SQLconn.LogIn(SQLconn.UserName, SQLconn.Password, User, myIP);
             ViewBag.Result = SQLconn.LogIn_msg;
             if (SQLconn.LogIn_Result)
             {
+                User = SQLconn.UserName;
                 return View("Privacy", SQLconn);
             }
             else
@@ -167,6 +174,7 @@ namespace TP1_webApp.Controllers
             ViewBag.Count = SQLconn.ItemsListCount;
             return View("Privacy", SQLconn);
         }
+
 
 
     }

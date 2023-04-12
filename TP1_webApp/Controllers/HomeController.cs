@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using System.Data.Common;
 using System.Data.SqlTypes;
 using System.Diagnostics;
 using System.Net;
@@ -12,12 +13,13 @@ namespace TP1_webApp.Controllers
         // HomeController
         private readonly ILogger<HomeController> _logger;
         SQLConnection myConnection = new SQLConnection();
-        String User = "";
+        String User;
         String myIP = Dns.GetHostByName(Dns.GetHostName()).AddressList[0].ToString();
 
         // Logger
         public HomeController(ILogger<HomeController> logger)
         {
+            User = "Carito";
             _logger = logger;
         }
 
@@ -25,7 +27,6 @@ namespace TP1_webApp.Controllers
         // Index view
         public IActionResult Index()
         {
-            ViewBag.UserName = myConnection.UserName;
             return View();
         }
 
@@ -44,7 +45,6 @@ namespace TP1_webApp.Controllers
         public IActionResult Sign_Out()
         {
             // ... calling the model method
-            User = "";
             myConnection.LogIn_Result = false;
             return View("Index", myConnection);
         }
@@ -93,7 +93,7 @@ namespace TP1_webApp.Controllers
             }
             else
             {
-                SQLconn.Add(SQLconn.Class, SQLconn.Name, SQLconn.Price);
+                SQLconn.Add(SQLconn.Class, SQLconn.Name, SQLconn.Price, User, myIP);
 
                 if (SQLconn.Add_msg == "")
                 {
@@ -110,16 +110,17 @@ namespace TP1_webApp.Controllers
         [HttpPost]
         public ActionResult LogIn(Models.SQLConnection SQLconn)
         {
-            SQLconn.LogIn(SQLconn.UserName, SQLconn.Password, User, myIP);
-            ViewBag.Result = SQLconn.LogIn_msg;
-            if (SQLconn.LogIn_Result)
+            myConnection = SQLconn;
+            myConnection.LogIn(myConnection.UserName, myConnection.Password, User, myIP);
+            ViewBag.Result = myConnection.LogIn_msg;
+            if (myConnection.LogIn_Result)
             {
-                User = SQLconn.UserName;
-                return View("Privacy", SQLconn);
+                User = myConnection.UserName;
+                return View("Privacy", myConnection);
             }
             else
             {
-                return View("Index", SQLconn);
+                return View("Index", myConnection);
             }
             
         }
@@ -128,17 +129,17 @@ namespace TP1_webApp.Controllers
         [HttpPost]
         public ActionResult FilterByName(SQLConnection SQLconn)
         {
-            ViewBag.filter = SQLconn.NameFilter_txt;
-            if (SQLconn.NameFilter_txt == null)
+            ViewBag.filter = myConnection.NameFilter_txt;
+            if (myConnection.NameFilter_txt == null)
             {
-                SQLconn.Get();
-                ViewBag.Count = SQLconn.ItemsListCount;
-                return View("Privacy", SQLconn);
+                myConnection.Get();
+                ViewBag.Count = myConnection.ItemsListCount;
+                return View("Privacy", myConnection);
             }
             // ... calling the Get method
-            SQLconn.FilterName(ViewBag.filter);
-            ViewBag.Count = SQLconn.ItemsListCount;
-            return View("Privacy", SQLconn);
+            myConnection.FilterName(ViewBag.filter, User, myIP);
+            ViewBag.Count = myConnection.ItemsListCount;
+            return View("Privacy", myConnection);
         }
 
         // Filter by Count method

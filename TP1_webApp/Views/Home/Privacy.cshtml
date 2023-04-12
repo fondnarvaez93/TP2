@@ -25,6 +25,7 @@
                             @Html.LabelFor(m => m.NameFilter_txt, "")
                             @Html.LabelFor(m => m.CountFilter_txt, "")
                             @Html.LabelFor(m => m.ClassFilter_txt, "")
+                            @Html.LabelFor(m => m.UserName, "", new {@Value = ViewBag.UserName})
                         }
 
                         @using (Html.BeginForm("FilterByName", "Home", FormMethod.Post))

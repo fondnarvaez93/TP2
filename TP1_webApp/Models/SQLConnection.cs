@@ -21,6 +21,7 @@ namespace TP1_webApp.Models
         public int Price { get; set; }
         public String UserName { get; set; }
         public String Password { get; set; }
+        public String myIP { get; set; }
         public String LogIn_msg { get; set; }
         public String Add_msg { get; set; }
         public bool LogIn_Result { get; set; }
@@ -47,6 +48,7 @@ namespace TP1_webApp.Models
 
             UserName = "";
             Password = "";
+            myIP = "";
             LogIn_msg = "";
             Add_msg = "";
             LogIn_Result = false;
@@ -100,7 +102,7 @@ namespace TP1_webApp.Models
 
 
         // ... Add item to DB
-        public void Add(String valClass, String valName, int valPrice)
+        public void Add(String valClass, String valName, int valPrice, String user, String ip)
         {
             try
             {
@@ -113,6 +115,8 @@ namespace TP1_webApp.Models
                 InsertCommand.Parameters.AddWithValue("@ArticuloClass", valClass);
                 InsertCommand.Parameters.AddWithValue("@newName", valName);
                 InsertCommand.Parameters.AddWithValue("@newPrice", valPrice);
+                InsertCommand.Parameters.AddWithValue("@User", user);
+                InsertCommand.Parameters.AddWithValue("@IP", ip);
 
                 // @ReturnVal could be any name
                 var returnParameter = InsertCommand.Parameters.Add("@ReturnVal", SqlDbType.VarChar);
@@ -201,7 +205,7 @@ namespace TP1_webApp.Models
 
 
         // ... Filter Name info from DB
-        public void FilterName(String str)
+        public void FilterName(String str, String user, String ip)
         {
             try
             {
@@ -209,10 +213,12 @@ namespace TP1_webApp.Models
                 Connection.Open();
 
                 // ... using the stored procedure
-                SqlCommand SelectCommand = new SqlCommand("FilterByName", Connection);
-                SelectCommand.CommandType = CommandType.StoredProcedure;
-                SelectCommand.Parameters.AddWithValue("@Item", str);
-                SqlDataReader Reader = SelectCommand.ExecuteReader();
+                SqlCommand InsertCommand = new SqlCommand("FilterByName", Connection);
+                InsertCommand.CommandType = CommandType.StoredProcedure;
+                InsertCommand.Parameters.AddWithValue("@Item", str);
+                InsertCommand.Parameters.AddWithValue("@User", user);
+                InsertCommand.Parameters.AddWithValue("@IP", ip);
+                SqlDataReader Reader = InsertCommand.ExecuteReader();
 
                 // ... collect the items from the DB
                 while (Reader.Read())

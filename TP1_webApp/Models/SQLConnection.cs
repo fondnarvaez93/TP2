@@ -324,5 +324,43 @@ namespace TP1_webApp.Models
         }
 
 
+        // ... Filter Count info from DB
+        public void LogOut(String user, String ip)
+        {
+            try
+            {
+                // ... open connection, send request and read responce
+                SqlConnection Connection = new SqlConnection(DBCredentials);
+
+                // ... using the stored procedure
+                SqlCommand InsertCommand = new SqlCommand("SignOut", Connection);
+                InsertCommand.CommandType = CommandType.StoredProcedure;
+                InsertCommand.Parameters.AddWithValue("@User", user);
+                InsertCommand.Parameters.AddWithValue("@IP", ip);
+
+                // ... collect the items from the DB
+                try
+                {
+                    Connection.Open();
+                    InsertCommand.ExecuteNonQuery();
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine("Exception: " + ex.ToString());
+                }
+
+                // ... close connection
+                Connection.Close();
+
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Exception: " + ex.ToString());
+            }
+        }
+
+
+
+
     }
 }

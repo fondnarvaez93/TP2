@@ -42,11 +42,12 @@ namespace TP1_webApp.Controllers
         }
 
         // Return Home view
-        public IActionResult Sign_Out()
+        public IActionResult Sign_Out(Models.SQLConnection SQLconn)
         {
             // ... calling the model method
-            myConnection.LogIn_Result = false;
-            return View("Index", myConnection);
+            SQLconn.LogIn_Result = false;
+            SQLconn.LogOut(User, myIP);
+            return View("Index", SQLconn);
         }
 
         // Insert view

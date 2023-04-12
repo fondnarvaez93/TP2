@@ -129,17 +129,17 @@ namespace TP1_webApp.Controllers
         [HttpPost]
         public ActionResult FilterByName(SQLConnection SQLconn)
         {
-            ViewBag.filter = myConnection.NameFilter_txt;
-            if (myConnection.NameFilter_txt == null)
+            ViewBag.filter = SQLconn.NameFilter_txt;
+            if (SQLconn.NameFilter_txt == null)
             {
-                myConnection.Get();
-                ViewBag.Count = myConnection.ItemsListCount;
-                return View("Privacy", myConnection);
+                SQLconn.Get();
+                ViewBag.Count = SQLconn.ItemsListCount;
+                return View("Privacy", SQLconn);
             }
             // ... calling the Get method
-            myConnection.FilterName(ViewBag.filter, User, myIP);
-            ViewBag.Count = myConnection.ItemsListCount;
-            return View("Privacy", myConnection);
+            SQLconn.FilterName(ViewBag.filter, User, myIP);
+            ViewBag.Count = SQLconn.ItemsListCount;
+            return View("Privacy", SQLconn);
         }
 
         // Filter by Count method
@@ -171,7 +171,7 @@ namespace TP1_webApp.Controllers
                 return View("Privacy", SQLconn);
             }
             // ... calling the Get method
-            SQLconn.FilterClass(ViewBag.filter);
+            SQLconn.FilterClass(ViewBag.filter, User, myIP);
             ViewBag.Count = SQLconn.ItemsListCount;
             return View("Privacy", SQLconn);
         }

@@ -283,7 +283,7 @@ namespace TP1_webApp.Models
         }
 
         // ... Filter Count info from DB
-        public void FilterClass(String classID)
+        public void FilterClass(String classID, String user, String ip)
         {
             try
             {
@@ -291,10 +291,12 @@ namespace TP1_webApp.Models
                 Connection.Open();
 
                 // ... using the stored procedure
-                SqlCommand SelectCommand = new SqlCommand("FilterByClass", Connection);
-                SelectCommand.CommandType = CommandType.StoredProcedure;
-                SelectCommand.Parameters.AddWithValue("@ClassName", classID);
-                SqlDataReader Reader = SelectCommand.ExecuteReader();
+                SqlCommand InsertCommand = new SqlCommand("FilterByClass", Connection);
+                InsertCommand.CommandType = CommandType.StoredProcedure;
+                InsertCommand.Parameters.AddWithValue("@ClassName", classID);
+                InsertCommand.Parameters.AddWithValue("@User", user);
+                InsertCommand.Parameters.AddWithValue("@IP", ip);
+                SqlDataReader Reader = InsertCommand.ExecuteReader();
 
                 // ... collect the items from the DB
                 while (Reader.Read())

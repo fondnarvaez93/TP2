@@ -45,7 +45,13 @@
 
                         @using (Html.BeginForm("FilterByClass", "Home", FormMethod.Post))
                         {
-                            <div class="input-group text-center info-wrap">
+                            <div class="input-group text-center info-wrap" style="color:white">
+                                <select id="SelectClass" class="dropdown btn bg-gradient-primary">
+                                    @foreach (var item in ViewBag.ClassesList)
+                                    {
+                                        <option value="@item">@item</option>
+                                    }
+                                </select>
                                 @Html.EditorFor(m => m.ClassFilter_txt,  new { htmlAttributes = new { @class = "form-control text-center", @style = "width:700px" } })
                                 <input type="submit" value="Filter by Classs" class="btn btn-success" />
                             </div>

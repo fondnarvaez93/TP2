@@ -38,6 +38,12 @@
                                                     </div>
                                                     <div class="editor-field">
                                                         @Html.TextBoxFor(m => m.Class)
+                                                        <select class="dropdown btn bg-gradient-primary">
+                                                            @foreach (var item in ViewBag.ClassesList)
+                                                            {
+                                                                <option value="@item">@item</option>
+                                                            }
+                                                        </select>
                                                     </div>
 
                                                     <div class="form-group">

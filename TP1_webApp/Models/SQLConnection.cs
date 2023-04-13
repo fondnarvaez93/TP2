@@ -12,6 +12,7 @@ namespace TP1_webApp.Models
     {
         // Attribute
         public List<ItemClass> ItemsList = new List<ItemClass>();
+        public List<String> ClassesList = new List<String>();
         public int ItemsListCount;
         // ... DB credentials
         public String DBCredentials;
@@ -92,6 +93,39 @@ namespace TP1_webApp.Models
                 ItemsList = sortedList;
                 Reader.Close();
                 
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Exception: " + ex.ToString());
+            }
+        }
+
+
+
+        // ... Get info from DB
+        public void GetClasses()
+        {
+            SqlConnection Connection = new SqlConnection(DBCredentials);
+            try
+            {
+                // ... open connection, send request and read responce
+                Connection.Open();
+
+                // ... using the stored procedure
+                SqlCommand SelectCommand = new SqlCommand("GetClasses", Connection);
+                SelectCommand.CommandType = CommandType.StoredProcedure;
+                SqlDataReader Reader = SelectCommand.ExecuteReader();
+
+                // ... collect the items from the DB
+                while (Reader.Read())
+                {
+                    String articuloNombre = "" + Reader["Nombre"].ToString();
+                    ClassesList.Add(articuloNombre);
+                }
+
+                // ... close connection
+                Reader.Close();
+
             }
             catch (Exception ex)
             {

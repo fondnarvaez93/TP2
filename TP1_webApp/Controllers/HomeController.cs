@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AspNetCore;
+using Microsoft.AspNetCore.Mvc;
 using System.Data.Common;
 using System.Data.SqlTypes;
 using System.Diagnostics;
@@ -19,7 +20,7 @@ namespace TP1_webApp.Controllers
         // Logger
         public HomeController(ILogger<HomeController> logger)
         {
-            User = "Carito";
+            User = "Sara";
             _logger = logger;
         }
 
@@ -38,6 +39,8 @@ namespace TP1_webApp.Controllers
             myConnection.Get();
             ViewBag.UserName = myConnection.UserName;
             ViewBag.Count = myConnection.ItemsListCount;
+            myConnection.GetClasses();
+            ViewBag.ClassesList = myConnection.ClassesList;
             return View("Privacy", myConnection);
         }
 
@@ -53,6 +56,8 @@ namespace TP1_webApp.Controllers
         // Insert view
         public IActionResult Insert()
         {
+            myConnection.GetClasses();
+            ViewBag.ClassesList = myConnection.ClassesList;
             return View("Insert", myConnection);
         }
 
@@ -79,6 +84,8 @@ namespace TP1_webApp.Controllers
             // ... calling the Get method
             myConnection.Get();
             ViewBag.Count = myConnection.ItemsListCount;
+            myConnection.GetClasses();
+            ViewBag.ClassesList = myConnection.ClassesList;
             return View("Privacy", myConnection);
         }
 
@@ -104,6 +111,8 @@ namespace TP1_webApp.Controllers
                 }
                 ViewBag.Add_msg = SQLconn.Add_msg;
             }
+            SQLconn.GetClasses();
+            ViewBag.ClassesList = SQLconn.ClassesList;
             return View("Insert");
         }
 
@@ -117,6 +126,10 @@ namespace TP1_webApp.Controllers
             if (myConnection.LogIn_Result)
             {
                 User = myConnection.UserName;
+                myConnection.GetClasses();
+                ViewBag.ClassesList = myConnection.ClassesList;
+                SQLconn.Get();
+                ViewBag.Count = SQLconn.ItemsListCount;
                 return View("Privacy", myConnection);
             }
             else
@@ -131,6 +144,8 @@ namespace TP1_webApp.Controllers
         public ActionResult FilterByName(SQLConnection SQLconn)
         {
             ViewBag.filter = SQLconn.NameFilter_txt;
+            SQLconn.GetClasses();
+            ViewBag.ClassesList = SQLconn.ClassesList;
             if (SQLconn.NameFilter_txt == null)
             {
                 SQLconn.Get();
@@ -148,6 +163,8 @@ namespace TP1_webApp.Controllers
         public ActionResult FilterByCount(SQLConnection SQLconn)
         {
             ViewBag.filter = SQLconn.CountFilter_txt;
+            SQLconn.GetClasses();
+            ViewBag.ClassesList = SQLconn.ClassesList;
             if (SQLconn.CountFilter_txt != (int)SQLconn.CountFilter_txt)
             {
                 SQLconn.Get();
@@ -165,6 +182,8 @@ namespace TP1_webApp.Controllers
         public ActionResult FilterByClass(SQLConnection SQLconn)
         {
             ViewBag.filter = SQLconn.ClassFilter_txt;
+            SQLconn.GetClasses();
+            ViewBag.ClassesList = SQLconn.ClassesList;
             if (SQLconn.ClassFilter_txt == null)
             {
                 SQLconn.Get();
